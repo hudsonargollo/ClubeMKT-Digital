@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import GridVisualization from "./GridVisualization";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen overflow-hidden bg-background">
       {/* Grid Background */}
@@ -20,7 +23,7 @@ const Hero = () => {
             transition={{ delay: 0.2 }}
             className="status-online mb-8"
           >
-            System Online
+            {t.hero.status}
           </motion.div>
 
           {/* Headline */}
@@ -30,11 +33,11 @@ const Hero = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mb-6 font-mono text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
           >
-            <span className="text-foreground">Automation</span>
+            <span className="text-foreground">{t.hero.headline1}</span>
             <br />
-            <span className="text-foreground">Architecture</span>
+            <span className="text-foreground">{t.hero.headline2}</span>
             <br />
-            <span className="text-primary">Deployed.</span>
+            <span className="text-primary">{t.hero.headline3}</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -44,9 +47,7 @@ const Hero = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="mb-10 max-w-xl font-sans text-lg text-muted-foreground md:text-xl"
           >
-            We replace manual, repetitive business processes with intelligent 
-            workflows. Precision-engineered automation for operations that 
-            demand reliability.
+            {t.hero.subheadline}
           </motion.p>
 
           {/* CTAs */}
@@ -57,10 +58,10 @@ const Hero = () => {
             className="flex flex-wrap gap-4"
           >
             <a href="#contact" className="btn-industrial-solid">
-              Request Blueprint
+              {t.hero.cta1}
             </a>
             <a href="#services" className="btn-industrial">
-              View Systems
+              {t.hero.cta2}
             </a>
           </motion.div>
 
@@ -72,9 +73,9 @@ const Hero = () => {
             className="mt-20 grid grid-cols-3 gap-8 border-t border-border pt-8"
           >
             {[
-              { value: "99.9%", label: "Uptime SLA" },
-              { value: "<50ms", label: "Avg Response" },
-              { value: "∞", label: "Scalability" },
+              { value: "99.9%", label: t.hero.stats.uptime },
+              { value: "<50ms", label: t.hero.stats.response },
+              { value: "∞", label: t.hero.stats.scalability },
             ].map((stat, i) => (
               <div key={i} className="text-center md:text-left">
                 <div className="font-mono text-2xl font-bold text-primary md:text-3xl">
@@ -98,7 +99,7 @@ const Hero = () => {
       >
         <div className="flex flex-col items-center gap-2">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            Scroll
+            {t.hero.scroll}
           </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}

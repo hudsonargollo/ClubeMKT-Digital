@@ -1,36 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const steps = [
-  {
-    phase: "01",
-    title: "Discovery",
-    description: "System audit and requirement analysis. We map your current infrastructure, identify bottlenecks, and define automation targets.",
-    output: "Requirements Document",
-  },
-  {
-    phase: "02",
-    title: "Blueprint",
-    description: "Architecture design and workflow mapping. Technical specifications, integration points, and deployment strategy documented.",
-    output: "Technical Blueprint",
-  },
-  {
-    phase: "03",
-    title: "Build",
-    description: "Development and integration execution. Iterative builds with continuous testing against defined parameters.",
-    output: "Functional System",
-  },
-  {
-    phase: "04",
-    title: "Deploy & Monitor",
-    description: "Production deployment with real-time monitoring. Performance metrics, error tracking, and continuous optimization.",
-    output: "Live Operations",
-  },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Process = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
 
   return (
     <section id="process" className="relative bg-card py-32">
@@ -45,7 +20,7 @@ const Process = () => {
           animate={isInView ? { opacity: 1 } : {}}
           className="section-header mb-16"
         >
-          <span>Execution Protocol</span>
+          <span>{t.process.sectionHeader}</span>
         </motion.div>
 
         {/* Process Timeline */}
@@ -60,7 +35,7 @@ const Process = () => {
 
           {/* Steps */}
           <div className="space-y-16 md:space-y-24">
-            {steps.map((step, i) => (
+            {t.process.steps.map((step, i) => (
               <motion.div
                 key={step.phase}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}

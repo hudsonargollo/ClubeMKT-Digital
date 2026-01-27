@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="border-t border-border bg-background py-12">
       <div className="container mx-auto px-6">
@@ -15,12 +18,12 @@ const Footer = () => {
 
           {/* Status */}
           <div className="status-online text-xs">
-            All Systems Operational
+            {t.footer.status}
           </div>
 
           {/* Copyright */}
           <div className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} CLUBEMKT. All rights reserved.
+            © {new Date().getFullYear()} CLUBEMKT. {t.footer.rights}
           </div>
         </div>
 
@@ -32,7 +35,7 @@ const Footer = () => {
           className="mt-8 border-t border-border pt-8 text-center"
         >
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            Automation Architecture · Precision Engineering · Intelligent Systems
+            {t.footer.tagline}
           </p>
         </motion.div>
       </div>

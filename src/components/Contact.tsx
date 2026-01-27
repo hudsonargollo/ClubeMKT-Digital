@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ const Contact = () => {
           animate={isInView ? { opacity: 1 } : {}}
           className="section-header mb-16"
         >
-          <span>Initialize Connection</span>
+          <span>{t.contact.sectionHeader}</span>
         </motion.div>
 
         <div className="grid gap-12 lg:grid-cols-2">
@@ -36,15 +38,13 @@ const Contact = () => {
             transition={{ delay: 0.2 }}
           >
             <h2 className="mb-6 font-mono text-3xl font-bold leading-tight md:text-4xl">
-              Ready to Deploy?
+              {t.contact.headline1}
               <br />
-              <span className="text-primary">Start Your Build.</span>
+              <span className="text-primary">{t.contact.headline2}</span>
             </h2>
 
             <p className="mb-8 max-w-md text-muted-foreground">
-              Submit your project parameters. Our team will analyze requirements 
-              and respond with a preliminary architecture assessment within 
-              48 hours.
+              {t.contact.description}
             </p>
 
             {/* Contact Details */}
@@ -55,7 +55,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                    Direct Line
+                    {t.contact.directLine}
                   </div>
                   <div className="font-mono text-sm">contact@clubemkt.com</div>
                 </div>
@@ -67,9 +67,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                    Response Time
+                    {t.contact.responseTime}
                   </div>
-                  <div className="font-mono text-sm">&lt; 48 hours</div>
+                  <div className="font-mono text-sm">{t.contact.responseValue}</div>
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ const Contact = () => {
             <div className="mb-6 flex items-center gap-2 border-b border-border pb-4">
               <span className="h-2 w-2 bg-primary animate-pulse" />
               <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                New Project Request
+                {t.contact.form.header}
               </span>
             </div>
 
@@ -95,13 +95,13 @@ const Contact = () => {
               {/* Name Field */}
               <div>
                 <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Identifier
+                  {t.contact.form.nameLabel}
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Your name or company"
+                  placeholder={t.contact.form.namePlaceholder}
                   className="w-full border border-border bg-background px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                 />
               </div>
@@ -109,13 +109,13 @@ const Contact = () => {
               {/* Email Field */}
               <div>
                 <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Communication Protocol
+                  {t.contact.form.emailLabel}
                 </label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="email@domain.com"
+                  placeholder={t.contact.form.emailPlaceholder}
                   className="w-full border border-border bg-background px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                 />
               </div>
@@ -123,20 +123,20 @@ const Contact = () => {
               {/* Message Field */}
               <div>
                 <label className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Project Parameters
+                  {t.contact.form.messageLabel}
                 </label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
-                  placeholder="Describe your automation requirements..."
+                  placeholder={t.contact.form.messagePlaceholder}
                   className="w-full resize-none border border-border bg-background px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                 />
               </div>
 
               {/* Submit Button */}
               <button type="submit" className="btn-industrial-solid w-full">
-                Transmit Request
+                {t.contact.form.submit}
               </button>
             </div>
           </motion.form>
