@@ -1,56 +1,23 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const services = [
-  {
-    id: "01",
-    title: "AI Agents & Chatbots",
-    tagline: "Revenue-Generating Intelligence",
-    description:
-      "Not generic support bots. Purpose-built agents that schedule appointments, qualify leads, and manage orders—transforming conversations into conversions.",
-    specs: [
-      "Lead qualification protocols",
-      "Appointment scheduling",
-      "Order management systems",
-      "Multi-channel deployment",
-    ],
-    industries: ["Clinics", "Delivery", "Service Providers"],
-    status: "Operational",
-  },
-  {
-    id: "02",
-    title: "Workflow Orchestration",
-    tagline: "Autopilot Operations",
-    description:
-      "Connect disparate applications—CRMs, payment gateways, spreadsheets—into unified workflows that run without intervention.",
-    specs: [
-      "Event-driven triggers",
-      "Conditional logic chains",
-      "Error handling protocols",
-      "Real-time monitoring",
-    ],
-    industries: ["E-commerce", "SaaS", "Finance"],
-    status: "Operational",
-  },
-  {
-    id: "03",
-    title: "Custom API Integration",
-    tagline: "Bridge Architecture",
-    description:
-      "Building precise bridges between systems that don't natively communicate. Data flows where it needs to, when it needs to.",
-    specs: [
-      "REST/GraphQL adapters",
-      "Webhook orchestration",
-      "Data transformation layers",
-      "Authentication handling",
-    ],
-    industries: ["Enterprise", "Startups", "Agencies"],
-    status: "Operational",
-  },
-];
+interface ServiceData {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  specs: string[];
+  industries: string[];
+}
 
-const ServiceCard = ({ service, index }: { service: typeof services[0]; index: number }) => {
+const ServiceCard = ({ service, index, status, specsLabel }: { 
+  service: ServiceData; 
+  index: number;
+  status: string;
+  specsLabel: string;
+}) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -70,7 +37,7 @@ const ServiceCard = ({ service, index }: { service: typeof services[0]; index: n
           <p className="mt-1 font-mono text-sm text-primary">{service.tagline}</p>
         </div>
         <div className="status-online text-xs">
-          {service.status}
+          {status}
         </div>
       </div>
 
@@ -80,7 +47,7 @@ const ServiceCard = ({ service, index }: { service: typeof services[0]; index: n
       {/* Specs - Revealed on Hover */}
       <div className="mb-6">
         <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          Technical Specs
+          {specsLabel}
         </span>
         <ul className="mt-3 space-y-2">
           {service.specs.map((spec, i) => (
@@ -116,6 +83,34 @@ const ServiceCard = ({ service, index }: { service: typeof services[0]; index: n
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
+
+  const services: ServiceData[] = [
+    {
+      id: t.services.service1.id,
+      title: t.services.service1.title,
+      tagline: t.services.service1.tagline,
+      description: t.services.service1.description,
+      specs: [...t.services.service1.specs],
+      industries: [...t.services.service1.industries],
+    },
+    {
+      id: t.services.service2.id,
+      title: t.services.service2.title,
+      tagline: t.services.service2.tagline,
+      description: t.services.service2.description,
+      specs: [...t.services.service2.specs],
+      industries: [...t.services.service2.industries],
+    },
+    {
+      id: t.services.service3.id,
+      title: t.services.service3.title,
+      tagline: t.services.service3.tagline,
+      description: t.services.service3.description,
+      specs: [...t.services.service3.specs],
+      industries: [...t.services.service3.industries],
+    },
+  ];
 
   return (
     <section id="services" className="relative bg-background py-32">
@@ -127,13 +122,19 @@ const Services = () => {
           animate={isInView ? { opacity: 1 } : {}}
           className="section-header mb-16"
         >
-          <span>Core Systems</span>
+          <span>{t.services.sectionHeader}</span>
         </motion.div>
 
         {/* Bento Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <ServiceCard key={service.id} service={service} index={i} />
+            <ServiceCard 
+              key={service.id} 
+              service={service} 
+              index={i} 
+              status={t.services.status}
+              specsLabel={t.services.specsLabel}
+            />
           ))}
         </div>
       </div>

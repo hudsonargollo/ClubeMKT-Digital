@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -20,21 +24,24 @@ const Header = () => {
         {/* Navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           <a href="#services" className="font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground">
-            Services
+            {t.nav.services}
           </a>
           <a href="#process" className="font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground">
-            Process
+            {t.nav.process}
           </a>
           <a href="#about" className="font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground">
-            About
+            {t.nav.about}
           </a>
         </nav>
 
-        {/* CTA */}
-        <a href="#contact" className="btn-industrial text-xs">
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Initialize
-        </a>
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          <a href="#contact" className="btn-industrial text-xs hidden sm:inline-flex">
+            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            {t.nav.initialize}
+          </a>
+        </div>
       </div>
     </motion.header>
   );

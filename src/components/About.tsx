@@ -1,9 +1,18 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
+
+  const stats = [
+    { label: t.about.stats.architecture, value: t.about.stats.architectureValue },
+    { label: t.about.stats.deployment, value: t.about.stats.deploymentValue },
+    { label: t.about.stats.monitoring, value: t.about.stats.monitoringValue },
+    { label: t.about.stats.support, value: t.about.stats.supportValue },
+  ];
 
   return (
     <section id="about" className="relative bg-background py-32">
@@ -15,7 +24,7 @@ const About = () => {
           animate={isInView ? { opacity: 1 } : {}}
           className="section-header mb-16"
         >
-          <span>System Overview</span>
+          <span>{t.about.sectionHeader}</span>
         </motion.div>
 
         <div className="grid gap-12 lg:grid-cols-2">
@@ -26,32 +35,19 @@ const About = () => {
             transition={{ delay: 0.2 }}
           >
             <h2 className="mb-6 font-mono text-3xl font-bold leading-tight md:text-4xl">
-              Precision Engineering
+              {t.about.headline1}
               <br />
-              <span className="text-primary">For Digital Operations</span>
+              <span className="text-primary">{t.about.headline2}</span>
             </h2>
 
             <div className="space-y-6 text-muted-foreground">
-              <p>
-                CLUBEMKT operates as an automation architect. We don't sell software—we 
-                engineer systems. Each deployment is custom-built to replace inefficient 
-                manual processes with reliable, scalable workflows.
-              </p>
-              <p>
-                Our methodology prioritizes stability over novelty. We implement proven 
-                patterns, test rigorously, and monitor continuously. The result: operations 
-                that run without intervention.
-              </p>
+              <p>{t.about.paragraph1}</p>
+              <p>{t.about.paragraph2}</p>
             </div>
 
             {/* Stats Grid */}
             <div className="mt-10 grid grid-cols-2 gap-6 border-t border-border pt-10">
-              {[
-                { label: "Architecture", value: "Custom" },
-                { label: "Deployment", value: "Managed" },
-                { label: "Monitoring", value: "24/7" },
-                { label: "Support", value: "Direct" },
-              ].map((item, i) => (
+              {stats.map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0 }}
@@ -79,19 +75,12 @@ const About = () => {
               <div className="h-3 w-3 rounded-full bg-destructive/50" />
               <div className="h-3 w-3 rounded-full bg-yellow-500/50" />
               <div className="h-3 w-3 rounded-full bg-primary/50" />
-              <span className="ml-2 text-xs text-muted-foreground">system.log</span>
+              <span className="ml-2 text-xs text-muted-foreground">{t.about.terminal.title}</span>
             </div>
 
             {/* Log Lines */}
             <div className="space-y-2 text-xs">
-              {[
-                { time: "00:00:01", msg: "Initializing CLUBEMKT core...", type: "info" },
-                { time: "00:00:02", msg: "Loading automation modules", type: "info" },
-                { time: "00:00:03", msg: "Connecting integration layer", type: "info" },
-                { time: "00:00:04", msg: "All systems operational", type: "success" },
-                { time: "00:00:05", msg: "Ready to accept connections", type: "success" },
-                { time: "00:00:06", msg: "Waiting for initialization...", type: "pending" },
-              ].map((log, i) => (
+              {t.about.terminal.lines.map((log, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -10 }}
