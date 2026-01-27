@@ -2,95 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* CLUBEMKT Design System - Digital Brutalism meets Swiss Precision */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Palette - Industrial Dark */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Cards & Surfaces */
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+    --card-hover: 0 0% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Acid Green - Primary Accent */
+    --primary: 75 100% 56%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Muted Industrial */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 70%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Elements */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Electric variation */
+    --accent: 75 100% 56%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* System States */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders & Inputs */
+    --border: 0 0% 18%;
+    --border-subtle: 0 0% 12%;
+    --input: 0 0% 15%;
+    --ring: 75 100% 56%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Grid System */
+    --grid-color: 0 0% 15%;
+    --grid-accent: 75 100% 56%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Typography */
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', system-ui, sans-serif;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar (keeping for compatibility) */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 75 100% 56%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 75 100% 56%;
   }
 }
 
@@ -99,7 +71,139 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* Typography System */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-mono);
+    @apply font-semibold tracking-tight;
+  }
+
+  code, pre, .mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Grid Overlay Effect */
+  .grid-overlay {
+    background-image: 
+      linear-gradient(to right, hsl(var(--grid-color)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--grid-color)) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .grid-overlay-dense {
+    background-image: 
+      linear-gradient(to right, hsl(var(--grid-color)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--grid-color)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Bento Box Styles */
+  .bento-card {
+    @apply relative overflow-hidden rounded-sm border border-border bg-card p-6 transition-all duration-300;
+  }
+
+  .bento-card:hover {
+    @apply border-primary/50 bg-card-hover;
+  }
+
+  .bento-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.05) 0%, transparent 50%);
+  }
+
+  .bento-card:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Technical Tag */
+  .tech-tag {
+    @apply inline-flex items-center gap-1 rounded-sm border border-border bg-secondary px-2 py-1 text-xs font-mono text-secondary-foreground;
+  }
+
+  /* Status Indicator */
+  .status-online {
+    @apply inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary;
+  }
+
+  .status-online::before {
+    content: '';
+    @apply h-2 w-2 rounded-full bg-primary animate-pulse;
+  }
+
+  /* Industrial Button */
+  .btn-industrial {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-sm border border-primary bg-transparent px-6 py-3 font-mono text-sm uppercase tracking-widest text-primary transition-all duration-200;
+  }
+
+  .btn-industrial:hover {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .btn-industrial-solid {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-sm border border-primary bg-primary px-6 py-3 font-mono text-sm uppercase tracking-widest text-primary-foreground transition-all duration-200;
+  }
+
+  .btn-industrial-solid:hover {
+    @apply bg-primary/90;
+  }
+
+  /* Section Headers */
+  .section-header {
+    @apply flex items-center gap-4 text-xs font-mono uppercase tracking-widest text-muted-foreground;
+  }
+
+  .section-header::after {
+    content: '';
+    @apply h-px flex-1 bg-border;
+  }
+
+  /* Reveal Animation */
+  .reveal-content {
+    @apply opacity-0 max-h-0 overflow-hidden transition-all duration-300;
+  }
+
+  .group:hover .reveal-content {
+    @apply opacity-100 max-h-40;
+  }
+
+  /* Terminal Cursor */
+  .cursor-blink::after {
+    content: '_';
+    @apply animate-pulse text-primary;
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  /* Custom Scrollbar */
+  .scrollbar-industrial::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
   }
 }
