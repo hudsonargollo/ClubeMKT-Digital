@@ -1,0 +1,144 @@
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
+const services = [
+  {
+    id: "01",
+    title: "AI Agents & Chatbots",
+    tagline: "Revenue-Generating Intelligence",
+    description:
+      "Not generic support bots. Purpose-built agents that schedule appointments, qualify leads, and manage orders—transforming conversations into conversions.",
+    specs: [
+      "Lead qualification protocols",
+      "Appointment scheduling",
+      "Order management systems",
+      "Multi-channel deployment",
+    ],
+    industries: ["Clinics", "Delivery", "Service Providers"],
+    status: "Operational",
+  },
+  {
+    id: "02",
+    title: "Workflow Orchestration",
+    tagline: "Autopilot Operations",
+    description:
+      "Connect disparate applications—CRMs, payment gateways, spreadsheets—into unified workflows that run without intervention.",
+    specs: [
+      "Event-driven triggers",
+      "Conditional logic chains",
+      "Error handling protocols",
+      "Real-time monitoring",
+    ],
+    industries: ["E-commerce", "SaaS", "Finance"],
+    status: "Operational",
+  },
+  {
+    id: "03",
+    title: "Custom API Integration",
+    tagline: "Bridge Architecture",
+    description:
+      "Building precise bridges between systems that don't natively communicate. Data flows where it needs to, when it needs to.",
+    specs: [
+      "REST/GraphQL adapters",
+      "Webhook orchestration",
+      "Data transformation layers",
+      "Authentication handling",
+    ],
+    industries: ["Enterprise", "Startups", "Agencies"],
+    status: "Operational",
+  },
+];
+
+const ServiceCard = ({ service, index }: { service: typeof services[0]; index: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.2, duration: 0.6 }}
+      className={`bento-card group ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}`}
+    >
+      {/* Header */}
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <span className="font-mono text-xs text-muted-foreground">{service.id}</span>
+          <h3 className="mt-1 font-mono text-xl font-semibold md:text-2xl">{service.title}</h3>
+          <p className="mt-1 font-mono text-sm text-primary">{service.tagline}</p>
+        </div>
+        <div className="status-online text-xs">
+          {service.status}
+        </div>
+      </div>
+
+      {/* Description */}
+      <p className="mb-6 text-muted-foreground">{service.description}</p>
+
+      {/* Specs - Revealed on Hover */}
+      <div className="mb-6">
+        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+          Technical Specs
+        </span>
+        <ul className="mt-3 space-y-2">
+          {service.specs.map((spec, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: index * 0.2 + i * 0.1 + 0.3 }}
+              className="flex items-center gap-2 font-mono text-sm text-secondary-foreground"
+            >
+              <span className="h-1 w-1 bg-primary" />
+              {spec}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Industries */}
+      <div className="flex flex-wrap gap-2">
+        {service.industries.map((industry, i) => (
+          <span key={i} className="tech-tag">
+            {industry}
+          </span>
+        ))}
+      </div>
+
+      {/* Corner Accent */}
+      <div className="absolute bottom-0 right-0 h-16 w-16 border-l border-t border-border opacity-0 transition-opacity group-hover:opacity-100" />
+    </motion.div>
+  );
+};
+
+const Services = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section id="services" className="relative bg-background py-32">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          className="section-header mb-16"
+        >
+          <span>Core Systems</span>
+        </motion.div>
+
+        {/* Bento Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, i) => (
+            <ServiceCard key={service.id} service={service} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Services;
