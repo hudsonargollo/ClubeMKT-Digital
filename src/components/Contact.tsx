@@ -57,7 +57,7 @@ const Contact = () => {
                   <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
                     {t.contact.directLine}
                   </div>
-                  <div className="font-mono text-sm">contact@clubemkt.com</div>
+                  <div className="font-mono text-sm">contact@clubemkt.digital</div>
                 </div>
               </div>
 
