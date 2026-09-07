@@ -4,6 +4,11 @@ An automation architect replacing manual, repetitive business tasks with intelli
 
 ## Technologies
 
+The live homepage at clubemkt.digital is a rebranded, single-file Three.js
+experience (`static/homepage.html`, adapted from
+[sublevel-studio](https://github.com/MengTo/sublevel-studio)). The previous
+React homepage is preserved and still live at `/classic`.
+
 This project is built with:
 
 - Vite
@@ -60,11 +65,15 @@ No environment variables are required for the base deployment.
 ## Project Structure
 
 ```
+static/
+└── homepage.html   # Live homepage (rebranded sublevel-studio, deployed as-is)
 src/
-├── components/     # React components
+├── components/     # React components (built to /classic)
 ├── hooks/          # Custom React hooks
 ├── i18n/           # Internationalization
 ├── lib/            # Utility functions
 ├── pages/          # Page components
 └── test/           # Test files
+scripts/
+└── build-site.mjs  # Combines the static homepage + classic React build into dist/
 ```
