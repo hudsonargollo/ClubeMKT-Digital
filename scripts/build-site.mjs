@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { copyFileSync, rmSync, mkdirSync } from "node:fs";
+import { copyFileSync, rmSync, mkdirSync, existsSync, cpSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -18,3 +18,8 @@ execSync("vite build --outDir dist/classic --base /classic/", {
   cwd: root,
   stdio: "inherit",
 });
+
+// Copy Cloudflare Pages Functions if present
+if (existsSync(path.join(root, "functions"))) {
+  cpSync(path.join(root, "functions"), path.join(dist, "functions"), { recursive: true });
+}

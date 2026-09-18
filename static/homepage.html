@@ -5037,18 +5037,34 @@ window.ThreeUITerrainPlume = { mountTerrainPlume, TERRAIN_PLUME_DEFAULTS, SCENE_
   if (window.ParticleScroll && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     window.__ps = window.ParticleScroll.mountParticleScroll('[data-ps]', { point: 0.68, band: 330, density: 2, size: 1.25, spread: 200, gravity: 0.35, drift: 0.9, swirl: 70, stagger: 0.55, fade: 0.42, settle: 0.7, hold: 1.15, smoothing: 0.26, tintA: [1.0, 0.3, 0.0], tintB: [1.0, 0.82, 0.2] });
   }
-  // Newsletter form
+  // Newsletter form with live Twenty CRM / webhook lead-capture
   (function signup() {
     const form = document.querySelector('footer .signup'); if (!form) return;
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const input = form.querySelector('input'), lbl = form.querySelector('.lbl');
-      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      const email = input.value.trim();
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       if (!ok) { input.focus(); input.style.borderColor = 'rgba(255,77,0,.9)'; return; }
       input.style.borderColor = '';
+      const originalLbl = lbl.textContent;
+      lbl.textContent = 'Transmitting...';
+
+      try {
+        fetch('/api/lead-capture', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            source: 'homepage_newsletter',
+            channel: 'clubemkt.digital'
+          })
+        }).catch(function(err) { console.warn('Lead capture sync notice:', err); });
+      } catch (e) {}
+
       input.value = ''; input.placeholder = 'You are on the list.';
       lbl.textContent = 'Welcome aboard';
-      setTimeout(() => { lbl.textContent = 'Count me in'; input.placeholder = 'you@studio.com'; }, 3200);
+      setTimeout(() => { lbl.textContent = originalLbl || 'Count me in'; input.placeholder = 'you@studio.com'; }, 3200);
     });
   })();
 

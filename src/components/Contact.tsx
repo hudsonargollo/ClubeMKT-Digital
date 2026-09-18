@@ -1,17 +1,54 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { submitLead } from "@/lib/leadCapture";
+import { toast } from "sonner";
 
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const { t } = useLanguage();
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", company: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { t, language } = useLanguage();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
-    console.log("Form submitted:", formData);
+
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      toast.error(language === "pt" ? "Por favor insira um e-mail válido." : "Please enter a valid email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await submitLead({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        company: formData.company,
+        source: "classic_contact_form",
+        channel: "clubemkt.digital/classic",
+        language: language,
+      });
+
+      if (res.success) {
+        setIsSubmitted(true);
+        toast.success(
+          language === "pt"
+            ? "Solicitação transmitida com sucesso! Entraremos em contato em breve."
+            : "Request transmitted successfully! Our architecture team will be in touch."
+        );
+        setFormData({ name: "", email: "", message: "", company: "" });
+      } else {
+        toast.error(res.error || "Transmission failed. Please try again.");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -99,6 +136,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
+                  required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder={t.contact.form.namePlaceholder}
@@ -113,6 +151,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
+                  required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder={t.contact.form.emailPlaceholder}
@@ -135,8 +174,21 @@ const Contact = () => {
               </div>
 
               {/* Submit Button */}
-              <button type="submit" className="btn-industrial-solid w-full">
-                {t.contact.form.submit}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-industrial-solid w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    <span>{language === "pt" ? "Transmitindo..." : "Transmitting..."}</span>
+                  </>
+                ) : isSubmitted ? (
+                  <span>{language === "pt" ? "✓ Transmitido" : "✓ Transmitted"}</span>
+                ) : (
+                  <span>{t.contact.form.submit}</span>
+                )}
               </button>
             </div>
           </motion.form>
